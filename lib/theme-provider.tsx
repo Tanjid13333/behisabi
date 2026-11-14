@@ -3,6 +3,7 @@ import { Appearance, View, useColorScheme as useSystemColorScheme } from "react-
 import { colorScheme as nativewindColorScheme, vars } from "nativewind";
 
 import { SchemeColors, type ColorScheme } from "@/constants/theme";
+import { loadThemePreference, saveThemePreference } from "@/lib/theme-preference";
 
 type ThemeContextValue = {
   colorScheme: ColorScheme;
@@ -37,6 +38,16 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     applyScheme(colorScheme);
   }, [applyScheme, colorScheme]);
+
+  useEffect(() => {
+    loadThemePreference().then((saved) => {
+      if (saved && saved !== colorScheme) setColorSchemeState(saved);
+    }).catch(() => undefined);
+  }, []);
+
+  useEffect(() => {
+    saveThemePreference(colorScheme).catch(() => undefined);
+  }, [colorScheme]);
 
   const themeVariables = useMemo(
     () =>

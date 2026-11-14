@@ -1,30 +1,40 @@
-// Fallback for using MaterialIcons on Android and web.
-
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { SymbolWeight, SymbolViewProps } from "expo-symbols";
 import { ComponentProps } from "react";
 import { OpaqueColorValue, type StyleProp, type TextStyle } from "react-native";
+import { FinanceIcon } from "@/components/finance-icon";
 
 type IconMapping = Partial<Record<Extract<SymbolViewProps["name"], string>, ComponentProps<typeof MaterialIcons>["name"]>>;
 type IconSymbolName = keyof typeof MAPPING;
 
-/**
- * Add your SF Symbols to Material Icons mappings here.
- * - see Material Icons in the [Icons Directory](https://icons.expo.fyi).
- * - see SF Symbols in the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
- */
 const MAPPING = {
   "house.fill": "home",
-  "paperplane.fill": "send",
-  "chevron.left.forwardslash.chevron.right": "code",
+  "clock.arrow.circlepath": "history",
+  "chart.bar.fill": "bar-chart",
+  "doc.text.fill": "receipt-long",
+  "gearshape.fill": "settings",
+  "bell.fill": "notifications-none",
+  "plus": "add",
   "chevron.right": "chevron-right",
+  "chevron.down": "keyboard-arrow-down",
+  "wallet.pass.fill": "account-balance-wallet",
+  "book.fill": "menu-book",
+  "hand.raised.fill": "handshake",
+  "chart.pie.fill": "pie-chart",
+  "banknote.fill": "payments",
+  "building.columns.fill": "account-balance",
+  "calendar": "event",
+  "flag.fill": "flag",
+  "target": "track-changes",
+  "arrow.up.right": "north-east",
+  "arrow.down.left": "south-west",
+  "arrow.left.arrow.right": "swap-horiz",
+  "moon.fill": "dark-mode",
+  "sun.max.fill": "light-mode",
+  "xmark": "close",
+  "checkmark": "check",
 } satisfies IconMapping;
 
-/**
- * An icon component that uses native SF Symbols on iOS, and Material Icons on Android and web.
- * This ensures a consistent look across platforms, and optimal resource usage.
- * Icon `name`s are based on SF Symbols and require manual mapping to Material Icons.
- */
 export function IconSymbol({
   name,
   size = 24,
@@ -37,5 +47,5 @@ export function IconSymbol({
   style?: StyleProp<TextStyle>;
   weight?: SymbolWeight;
 }) {
-  return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
+  return <FinanceIcon color={String(color)} size={size} name={MAPPING[name] ?? "circle"} style={style as TextStyle} />;
 }
